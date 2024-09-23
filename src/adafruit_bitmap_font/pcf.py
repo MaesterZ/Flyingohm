@@ -93,9 +93,7 @@ Accelerators = namedtuple(
         "ink_maxbounds",
     ),
 )
-Encoding = namedtuple(
-    "Encoding", ("min_byte2", "max_byte2", "min_byte1", "max_byte1", "default_char")
-)
+Encoding = namedtuple("Encoding", ("min_byte2", "max_byte2", "min_byte1", "max_byte1", "default_char"))
 Bitmap = namedtuple("Bitmap", ("glyph_count", "bitmap_sizes"))
 
 
@@ -304,21 +302,15 @@ class PCF(GlyphCache):
         elif isinstance(code_points, str):
             code_points = [ord(c) for c in code_points]
 
-        code_points = sorted(
-            c for c in code_points if self._glyphs.get(c, None) is None
-        )
+        code_points = sorted(c for c in code_points if self._glyphs.get(c, None) is None)
         if not code_points:
             return
 
         indices_offset = self.tables[_PCF_BDF_ENCODINGS].offset + 14
         bitmap_offset_offsets = self.tables[_PCF_BITMAPS].offset + 8
-        first_bitmap_offset = self.tables[_PCF_BITMAPS].offset + 4 * (
-            6 + self._bitmaps.glyph_count
-        )
+        first_bitmap_offset = self.tables[_PCF_BITMAPS].offset + 4 * (6 + self._bitmaps.glyph_count)
         metrics_compressed = self.tables[_PCF_METRICS].format & _PCF_COMPRESSED_METRICS
-        first_metric_offset = self.tables[_PCF_METRICS].offset + (
-            6 if metrics_compressed else 8
-        )
+        first_metric_offset = self.tables[_PCF_METRICS].offset + (6 if metrics_compressed else 8)
         metrics_size = 5 if metrics_compressed else 12
 
         # These will each _tend to be_ forward reads in the file, at least
@@ -335,8 +327,7 @@ class PCF(GlyphCache):
                 continue
 
             encoding_idx = (
-                (enc1 - self._encoding.min_byte1)
-                * (self._encoding.max_byte2 - self._encoding.min_byte2 + 1)
+                (enc1 - self._encoding.min_byte1) * (self._encoding.max_byte2 - self._encoding.min_byte2 + 1)
                 + enc2
                 - self._encoding.min_byte2
             )

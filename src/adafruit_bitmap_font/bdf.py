@@ -108,9 +108,7 @@ class BDF(GlyphCache):
         try:
             self._boundingbox
         except AttributeError as error:
-            raise RuntimeError(
-                "Source file does not have the FOUNTBOUNDINGBOX parameter"
-            ) from error
+            raise RuntimeError("Source file does not have the FOUNTBOUNDINGBOX parameter") from error
 
     def _readline_file(self) -> str:
         line = self.file.readline()

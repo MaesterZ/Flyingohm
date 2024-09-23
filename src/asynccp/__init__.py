@@ -11,7 +11,7 @@ __global_event_loop = None
 try:
     global asynccp_logging
     if asynccp_logging:
-        print('Enabling asynccp instrumentation')
+        print("Enabling asynccp instrumentation")
 except NameError:
     # Set False by default to skip debug logging
     asynccp_logging = False

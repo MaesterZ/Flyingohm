@@ -116,37 +116,22 @@ class Label(LabelBase):
             ascent, descent = self._ascent, self._descent
 
             if self._label_direction in ("DWR", "UPR"):
-                box_height = (
-                    self._bounding_box[3] + self._padding_right + self._padding_left
-                )
+                box_height = self._bounding_box[3] + self._padding_right + self._padding_left
                 x_box_offset = -self._padding_left
                 box_width = (
-                    (ascent + descent)
-                    + int((lines - 1) * self._width * self._line_spacing)
-                    + self._padding_top
-                    + self._padding_bottom
+                    (ascent + descent) + int((lines - 1) * self._width * self._line_spacing) + self._padding_top + self._padding_bottom
                 )
             elif self._label_direction == "TTB":
-                box_height = (
-                    self._bounding_box[3] + self._padding_top + self._padding_bottom
-                )
+                box_height = self._bounding_box[3] + self._padding_top + self._padding_bottom
                 x_box_offset = -self._padding_left
                 box_width = (
-                    (ascent + descent)
-                    + int((lines - 1) * self._height * self._line_spacing)
-                    + self._padding_right
-                    + self._padding_left
+                    (ascent + descent) + int((lines - 1) * self._height * self._line_spacing) + self._padding_right + self._padding_left
                 )
             else:
-                box_width = (
-                    self._bounding_box[2] + self._padding_left + self._padding_right
-                )
+                box_width = self._bounding_box[2] + self._padding_left + self._padding_right
                 x_box_offset = -self._padding_left
                 box_height = (
-                    (ascent + descent)
-                    + int((lines - 1) * self._height * self._line_spacing)
-                    + self._padding_top
-                    + self._padding_bottom
+                    (ascent + descent) + int((lines - 1) * self._height * self._line_spacing) + self._padding_top + self._padding_bottom
                 )
 
             if self._label_direction == "DWR":
@@ -217,32 +202,20 @@ class Label(LabelBase):
             # add bitmap if text is present and bitmap sizes > 0 pixels
             if (
                 (len(self._text) > 0)
-                and (
-                    self._bounding_box[2] + self._padding_left + self._padding_right > 0
-                )
-                and (
-                    self._bounding_box[3] + self._padding_top + self._padding_bottom > 0
-                )
+                and (self._bounding_box[2] + self._padding_left + self._padding_right > 0)
+                and (self._bounding_box[3] + self._padding_top + self._padding_bottom > 0)
             ):
-                self._local_group.insert(
-                    0, self._create_background_box(lines, y_offset)
-                )
+                self._local_group.insert(0, self._create_background_box(lines, y_offset))
                 self._added_background_tilegrid = True
 
         else:  # a bitmap is present in the self Group
             # update bitmap if text is present and bitmap sizes > 0 pixels
             if (
                 (len(self._text) > 0)
-                and (
-                    self._bounding_box[2] + self._padding_left + self._padding_right > 0
-                )
-                and (
-                    self._bounding_box[3] + self._padding_top + self._padding_bottom > 0
-                )
+                and (self._bounding_box[2] + self._padding_left + self._padding_right > 0)
+                and (self._bounding_box[3] + self._padding_top + self._padding_bottom > 0)
             ):
-                self._local_group[0] = self._create_background_box(
-                    lines, self._y_offset
-                )
+                self._local_group[0] = self._create_background_box(lines, self._y_offset)
             else:  # delete the existing bitmap
                 self._local_group.pop(0)
                 self._added_background_tilegrid = False
@@ -298,9 +271,7 @@ class Label(LabelBase):
                             left = min(left, glyph.dx)
                     position_x = x + glyph.dx
                 else:
-                    left = max(
-                        left, abs(x) + glyph.shift_x, abs(x) + glyph.width + glyph.dx
-                    )
+                    left = max(left, abs(x) + glyph.shift_x, abs(x) + glyph.width + glyph.dx)
                     if x == 0:
                         if right is None:
                             right = 0
@@ -318,9 +289,7 @@ class Label(LabelBase):
                     top = min(top, -glyph.dy)
 
                 bottom = max(bottom, y + glyph.height, y + glyph.height + glyph.dy)
-                right = max(
-                    right, x + glyph.width + glyph.dx, x + glyph.shift_x + glyph.dx
-                )
+                right = max(right, x + glyph.width + glyph.dx, x + glyph.shift_x + glyph.dx)
                 position_y = y + glyph.dy
                 position_x = x - glyph.width // 2 + self._y_offset
 

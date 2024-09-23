@@ -74,9 +74,7 @@ class Polygon(displayio.TileGrid):
             self.outline = outline
             self.draw(self._bitmap, shifted, self._OUTLINE, close)
 
-        super().__init__(
-            self._bitmap, pixel_shader=self._palette, x=x_offset, y=y_offset
-        )
+        super().__init__(self._bitmap, pixel_shader=self._palette, x=x_offset, y=y_offset)
 
     @staticmethod
     def draw(

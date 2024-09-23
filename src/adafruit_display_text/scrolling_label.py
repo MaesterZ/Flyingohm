@@ -89,21 +89,12 @@ class ScrollingLabel(bitmap_label.Label):
                 return
 
             if self.current_index + self.max_characters <= len(self.full_text):
-                _showing_string = self.full_text[
-                    self.current_index : self.current_index + self.max_characters
-                ]
+                _showing_string = self.full_text[self.current_index : self.current_index + self.max_characters]
             else:
                 _showing_string_start = self.full_text[self.current_index :]
-                _showing_string_end = "{}".format(
-                    self.full_text[
-                        : (self.current_index + self.max_characters)
-                        % len(self.full_text)
-                    ]
-                )
+                _showing_string_end = "{}".format(self.full_text[: (self.current_index + self.max_characters) % len(self.full_text)])
 
-                _showing_string = "{}{}".format(
-                    _showing_string_start, _showing_string_end
-                )
+                _showing_string = "{}{}".format(_showing_string_start, _showing_string_end)
             super()._set_text(_showing_string, self.scale)
             self.current_index += 1
             self._last_animate_time = _now

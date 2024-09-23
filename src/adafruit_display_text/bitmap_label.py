@@ -137,9 +137,7 @@ class Label(LabelBase):
             self._text = None  # save a None value since text string is not saved
 
         # Check for empty string
-        if (text == "") or (
-            text is None
-        ):  # If empty string, just create a zero-sized bounding box and that's it.
+        if (text == "") or (text is None):  # If empty string, just create a zero-sized bounding box and that's it.
             self._bounding_box = (
                 0,
                 0,
@@ -189,11 +187,7 @@ class Label(LabelBase):
 
             # Create the Bitmap unless it can be reused
             new_bitmap = None
-            if (
-                self._bitmap is None
-                or self._bitmap.width != box_x
-                or self._bitmap.height != box_y
-            ):
+            if self._bitmap is None or self._bitmap.width != box_x or self._bitmap.height != box_y:
                 new_bitmap = displayio.Bitmap(box_x, box_y, len(self._palette))
                 self._bitmap = new_bitmap
             else:
@@ -230,16 +224,12 @@ class Label(LabelBase):
                 # the bitmap_label
                 for _ in self._local_group:
                     self._local_group.pop(0)
-                self._local_group.append(
-                    self._tilegrid
-                )  # add the bitmap's tilegrid to the group
+                self._local_group.append(self._tilegrid)  # add the bitmap's tilegrid to the group
 
             # Set TileGrid properties based on label_direction
             if self._label_direction != self._prev_label_direction:
                 tg1 = self._tilegrid
-                tg1.transpose_xy, tg1.flip_x, tg1.flip_y = self._DIR_MAP[
-                    self._label_direction
-                ]
+                tg1.transpose_xy, tg1.flip_x, tg1.flip_y = self._DIR_MAP[self._label_direction]
 
             # Update bounding_box values.  Note: To be consistent with label.py,
             # this is the bounding box for the text only, not including the background.
@@ -264,9 +254,7 @@ class Label(LabelBase):
                     tight_box_y,
                 )
 
-        if (
-            scale is not None
-        ):  # Scale will be defined in local_group (Note: self should have scale=1)
+        if scale is not None:  # Scale will be defined in local_group (Note: self should have scale=1)
             self.scale = scale  # call the setter
 
         # set the anchored_position with setter after bitmap is created, sets the
@@ -279,18 +267,14 @@ class Label(LabelBase):
         return_value = int(line_spacing * font.get_bounding_box()[1])
         return return_value
 
-    def _text_bounding_box(
-        self, text: str, font: FontProtocol
-    ) -> Tuple[int, int, int, int, int, int]:
+    def _text_bounding_box(self, text: str, font: FontProtocol) -> Tuple[int, int, int, int, int, int]:
         # pylint: disable=too-many-locals
 
         ascender_max, descender_max = self._ascent, self._descent
 
         lines = 1
 
-        xposition = (
-            x_start
-        ) = yposition = y_start = 0  # starting x and y position (left margin)
+        xposition = x_start = yposition = y_start = 0  # starting x and y position (left margin)
 
         left = None
         right = x_start
@@ -313,9 +297,7 @@ class Label(LabelBase):
                 else:
                     if newlines:
                         xposition = x_start  # reset to left column
-                        yposition += (
-                            self._line_spacing_ypixels(font, line_spacing) * newlines
-                        )  # Add the newline(s)
+                        yposition += self._line_spacing_ypixels(font, line_spacing) * newlines  # Add the newline(s)
                         lines += newlines
                         newlines = 0
                     if xposition == x_start:
@@ -340,9 +322,7 @@ class Label(LabelBase):
         final_box_height_tight = bottom - top
         final_y_offset_tight = -top + y_offset_tight
 
-        final_box_height_loose = (lines - 1) * self._line_spacing_ypixels(
-            font, line_spacing
-        ) + (ascender_max + descender_max)
+        final_box_height_loose = (lines - 1) * self._line_spacing_ypixels(font, line_spacing) + (ascender_max + descender_max)
         final_y_offset_loose = ascender_max
 
         # return (final_box_width, final_box_height, left, final_y_offset)
@@ -385,9 +365,7 @@ class Label(LabelBase):
         for char in text:
             if char == "\n":  # newline
                 xposition = x_start  # reset to left column
-                yposition = yposition + self._line_spacing_ypixels(
-                    font, line_spacing
-                )  # Add a newline
+                yposition = yposition + self._line_spacing_ypixels(font, line_spacing)  # Add a newline
 
             else:
                 my_glyph = font.get_glyph(ord(char))
@@ -424,19 +402,11 @@ class Label(LabelBase):
                         y_clip = -y_blit_target  # clip this amount from top of bitmap
                         y_blit_target = 0  # draw the clipped bitmap at y=0
                         if self._verbose:
-                            print(
-                                'Warning: Glyph clipped, exceeds Ascent property: "{}"'.format(
-                                    char
-                                )
-                            )
+                            print('Warning: Glyph clipped, exceeds Ascent property: "{}"'.format(char))
 
                     if (y_blit_target + my_glyph.height) > bitmap.height:
                         if self._verbose:
-                            print(
-                                'Warning: Glyph clipped, exceeds descent property: "{}"'.format(
-                                    char
-                                )
-                            )
+                            print('Warning: Glyph clipped, exceeds descent property: "{}"'.format(char))
 
                     self._blit(
                         bitmap,
@@ -506,15 +476,11 @@ class Label(LabelBase):
                     x_placement = x + x_count
                     y_placement = y + y_count
 
-                    if (bitmap.width > x_placement >= 0) and (
-                        bitmap.height > y_placement >= 0
-                    ):  # ensure placement is within target bitmap
+                    if (bitmap.width > x_placement >= 0) and (bitmap.height > y_placement >= 0):  # ensure placement is within target bitmap
                         # get the palette index from the source bitmap
                         this_pixel_color = source_bitmap[
                             y_1
-                            + (
-                                y_count * source_bitmap.width
-                            )  # Direct index into a bitmap array is speedier than [x,y] tuple
+                            + (y_count * source_bitmap.width)  # Direct index into a bitmap array is speedier than [x,y] tuple
                             + x_1
                             + x_count
                         ]

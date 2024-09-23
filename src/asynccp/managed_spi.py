@@ -7,7 +7,12 @@ class ManagedSpi:
         """
         Vends access to an SPI bus via chip select leases.
         """
-        self._resource = ManagedResource(spi_bus, on_acquire=self._acquire_spi, on_release=self._release_spi, loop=loop)
+        self._resource = ManagedResource(
+            spi_bus,
+            on_acquire=self._acquire_spi,
+            on_release=self._release_spi,
+            loop=loop,
+        )
         self._handles = {}
 
     @staticmethod
@@ -17,7 +22,7 @@ class ManagedSpi:
     @staticmethod
     def _release_spi(chip_select):
         chip_select.value = True
-    
+
     def cs_handle(self, chip_select):
         """
         pass in a digitalio.DigitalInOut chip select.
@@ -32,7 +37,7 @@ class ManagedSpi:
         You need to:
           * configure the bus to work with your devices
           * configure the chip select pins as outputs
-        
+
         You get:
           * non-blocking, awaitable access to an SPI
         """

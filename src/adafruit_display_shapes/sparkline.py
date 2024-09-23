@@ -76,9 +76,7 @@ class Sparkline(MultiSparkline):
         y: int = 0,
         color: int = 0xFFFFFF,  # line color, default is WHITE
     ) -> None:
-        super().__init__(
-            width, height, max_items, [color], dyn_xpitch, [y_min], [y_max], x, y
-        )
+        super().__init__(width, height, max_items, [color], dyn_xpitch, [y_min], [y_max], x, y)
 
     # pylint: enable=too-many-arguments
 

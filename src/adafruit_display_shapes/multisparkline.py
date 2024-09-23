@@ -124,21 +124,13 @@ class MultiSparkline(displayio.TileGrid):
         # define class instance variables
         self._max_items = max_items  # maximum number of items in the list
         self._lines = len(colors)
-        self._buffers = [
-            _CyclicBuffer(self._max_items, 0.0) for i in range(self._lines)
-        ]  # values per sparkline
-        self._points = [
-            _CyclicBuffer(self._max_items, (0, 0)) for i in range(self._lines)
-        ]  # _points: all points of sparkline
+        self._buffers = [_CyclicBuffer(self._max_items, 0.0) for i in range(self._lines)]  # values per sparkline
+        self._points = [_CyclicBuffer(self._max_items, (0, 0)) for i in range(self._lines)]  # _points: all points of sparkline
         self.dyn_xpitch = dyn_xpitch
         if not dyn_xpitch:
             self._xpitch = (width - 1) / (self._max_items - 1)
-        self.y_mins = (
-            [None] * self._lines if y_mins is None else y_mins
-        )  # minimum of each y-axis (None: autoscale)
-        self.y_maxs = (
-            [None] * self._lines if y_maxs is None else y_maxs
-        )  # maximum of each y-axis (None: autoscale)
+        self.y_mins = [None] * self._lines if y_mins is None else y_mins  # minimum of each y-axis (None: autoscale)
+        self.y_maxs = [None] * self._lines if y_maxs is None else y_maxs  # maximum of each y-axis (None: autoscale)
         self.y_bottoms = self.y_mins.copy()
         # y_bottom: The actual minimum value of the vertical scale, will be
         # updated if autorange
@@ -176,9 +168,7 @@ class MultiSparkline(displayio.TileGrid):
             if value is not None:
                 top = self.y_tops[i]
                 bottom = self.y_bottoms[i]
-                if (
-                    self._buffers[i].len() >= self._max_items
-                ):  # if list is full, remove the first item
+                if self._buffers[i].len() >= self._max_items:  # if list is full, remove the first item
                     first = self._buffers[i].pop()
                     # check if boundaries have to be updated
                     if self.y_mins[i] is None and first == bottom:

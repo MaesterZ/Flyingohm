@@ -9,12 +9,14 @@ class Resource:
         self.active_cs = None
 
     def acquire(self, chip_select):
-        assert self.active_cs is None, 'cannot acquire owned resource.  Owned cs: ' + self.active_cs + ', requested cs: ' + chip_select
+        assert self.active_cs is None, "cannot acquire owned resource.  Owned cs: " + self.active_cs + ", requested cs: " + chip_select
         self.active_cs = chip_select
         return self
 
     def release(self, chip_select):
-        assert self.active_cs is not None, 'cannot release unowned resource.  Owned cs: ' + self.active_cs + ', requested cs: ' + chip_select
+        assert self.active_cs is not None, (
+            "cannot release unowned resource.  Owned cs: " + self.active_cs + ", requested cs: " + chip_select
+        )
         self.active_cs = None
 
 
@@ -32,12 +34,12 @@ class TestManagedResource(TestCase):
         handle_cs2 = managed_spi.handle(chip_select=2)
         self.assertIsNone(spi.active_cs)
 
-        async def test_fn(managed_resource):     # Stop points
-            await YieldOne()                     # Enter fn
+        async def test_fn(managed_resource):  # Stop points
+            await YieldOne()  # Enter fn
             async with managed_resource as spi:  # acquire/suspend
-                await YieldOne()                 # work
+                await YieldOne()  # work
                 self.assertTrue(spi.active_cs is not None)
-            await YieldOne()                     # after context
+            await YieldOne()  # after context
 
         loop.add_task(test_fn(handle_cs1))
         loop.add_task(test_fn(handle_cs2))

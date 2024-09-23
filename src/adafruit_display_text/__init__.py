@@ -83,18 +83,9 @@ def wrap_text_to_pixels(
                     else:
                         extraspace = swidth
                         leadchar = " "
-                    if (
-                        measure("".join(partial))
-                        + measure(cur_part)
-                        + measure(char)
-                        + measure("-")
-                        + extraspace
-                        > max_width
-                    ):
+                    if measure("".join(partial)) + measure(cur_part) + measure(char) + measure("-") + extraspace > max_width:
                         if cur_part:
-                            word_parts.append(
-                                "".join(partial) + leadchar + cur_part + "-"
-                            )
+                            word_parts.append("".join(partial) + leadchar + cur_part + "-")
 
                         else:
                             word_parts.append("".join(partial))
@@ -347,9 +338,7 @@ class LabelBase(Group):
         return self._background_color
 
     def _set_background_color(self, new_color):
-        raise NotImplementedError(
-            "{} MUST override '_set_background_color'".format(type(self))
-        )
+        raise NotImplementedError("{} MUST override '_set_background_color'".format(type(self)))
 
     @background_color.setter
     def background_color(self, new_color: int) -> None:
@@ -384,9 +373,7 @@ class LabelBase(Group):
         # Calculate (x,y) position
         if (self._anchor_point is not None) and (self._anchored_position is not None):
             self.x = int(
-                new_position[0]
-                - (self._bounding_box[0] * self.scale)
-                - round(self._anchor_point[0] * (self._bounding_box[2] * self.scale))
+                new_position[0] - (self._bounding_box[0] * self.scale) - round(self._anchor_point[0] * (self._bounding_box[2] * self.scale))
             )
             if self._anchor_point[1] == self._baseline:
                 self.y = int(new_position[1] - (self._y_offset * self.scale))
@@ -442,9 +429,7 @@ class LabelBase(Group):
         return self._line_spacing
 
     def _set_line_spacing(self, new_line_spacing: float) -> None:
-        raise NotImplementedError(
-            "{} MUST override '_set_line_spacing'".format(type(self))
-        )
+        raise NotImplementedError("{} MUST override '_set_line_spacing'".format(type(self)))
 
     @line_spacing.setter
     def line_spacing(self, new_line_spacing: float) -> None:
@@ -456,14 +441,10 @@ class LabelBase(Group):
         return self._label_direction
 
     def _set_label_direction(self, new_label_direction: str) -> None:
-        raise NotImplementedError(
-            "{} MUST override '_set_label_direction'".format(type(self))
-        )
+        raise NotImplementedError("{} MUST override '_set_label_direction'".format(type(self)))
 
     def _get_valid_label_directions(self) -> Tuple[str, ...]:
-        raise NotImplementedError(
-            "{} MUST override '_get_valid_label_direction'".format(type(self))
-        )
+        raise NotImplementedError("{} MUST override '_get_valid_label_direction'".format(type(self)))
 
     @label_direction.setter
     def label_direction(self, new_label_direction: str) -> None:

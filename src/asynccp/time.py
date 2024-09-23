@@ -1,4 +1,3 @@
-
 class Duration:
     @staticmethod
     def of_hours(count):

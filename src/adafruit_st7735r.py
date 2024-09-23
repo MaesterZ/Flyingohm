@@ -79,23 +79,12 @@ class ST7735R(displayio.Display):
     :param bool invert: (Optional) Invert the colors (default=False)
     """
 
-    def __init__(
-        self,
-        bus: displayio.FourWire,
-        *,
-        bgr: bool = False,
-        invert: bool = False,
-        **kwargs: Any
-    ):
+    def __init__(self, bus: displayio.FourWire, *, bgr: bool = False, invert: bool = False, **kwargs: Any):
         init_sequence = _INIT_SEQUENCE
         if bgr:
-            init_sequence += (
-                b"\x36\x01\xC0"  # _MADCTL Default rotation plus BGR encoding
-            )
+            init_sequence += b"\x36\x01\xC0"  # _MADCTL Default rotation plus BGR encoding
         else:
-            init_sequence += (
-                b"\x36\x01\xC8"  # _MADCTL Default rotation plus RGB encoding
-            )
+            init_sequence += b"\x36\x01\xC8"  # _MADCTL Default rotation plus RGB encoding
         if invert:
             init_sequence += b"\x21\x00"  # _INVON
         super().__init__(bus, init_sequence, **kwargs)

@@ -35,9 +35,7 @@ __version__ = "2.0.1"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Bitmap_Font.git"
 
 
-def load_font(
-    filename: str, bitmap: Optional[Bitmap] = None
-) -> Union[bdf.BDF, pcf.PCF, ttf.TTF]:
+def load_font(filename: str, bitmap: Optional[Bitmap] = None) -> Union[bdf.BDF, pcf.PCF, ttf.TTF]:
     """Loads a font file. Returns None if unsupported."""
     # pylint: disable=import-outside-toplevel, redefined-outer-name, consider-using-with
     if not bitmap:

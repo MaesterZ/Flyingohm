@@ -24,9 +24,7 @@ __version__ = "2.0.10"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_SimpleMath.git"
 
 
-def map_range(
-    x: float, in_min: float, in_max: float, out_min: float, out_max: float
-) -> float:
+def map_range(x: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float:
     """
     Maps a number from one range to another. Somewhat similar to the Arduino
     :attr:`map()` function, but returns a floating point result, and
@@ -59,9 +57,7 @@ def map_range(
     return constrain(mapped, out_min, out_max)
 
 
-def map_unconstrained_range(
-    x: float, in_min: float, in_max: float, out_min: float, out_max: float
-) -> float:
+def map_unconstrained_range(x: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float:
     """
     Maps a number from one range to another. Somewhat similar to the Arduino
     :attr:`map()` function, but returns a floating point result, and

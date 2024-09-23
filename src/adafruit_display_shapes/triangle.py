@@ -82,9 +82,7 @@ class Triangle(Polygon):
         super().__init__(points)
 
         if fill is not None:
-            self._draw_filled(
-                x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0
-            )
+            self._draw_filled(x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0)
             self.fill = fill
         else:
             self.fill = None
